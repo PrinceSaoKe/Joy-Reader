@@ -5,8 +5,8 @@ import { ref, watch } from 'vue';
 const mdRef = ref('# Hello World!')
 const mdToHtml = ref('<h1>Hello World!</h1>')
 
-watch(mdRef, () => {
-  mdToHtml.value = marked.parse(mdRef.value, { async: false })
+watch(mdRef, async () => {
+  mdToHtml.value = await marked.parse(mdRef.value, { async: false })
 })
 </script>
 

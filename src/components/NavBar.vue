@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import router from '@/router';
-import { Right, UserFilled } from '@element-plus/icons-vue';
-
-const toSettings = () => {
-  router.push('/settings')
-}
+import { Right, Upload } from '@element-plus/icons-vue';
 </script>
 
 <template>
   <div id="nav_bar">
-    <p>LOGO</p>
+    <p @click="router.push('/')">LOGO</p>
     <div id="actions">
       <el-popover placement="bottom-start" :width="200" trigger="hover">
         <template #reference>
-          <el-icon color="white" class="action"><UserFilled /></el-icon>
+          <div class="action avatar">
+            <el-icon color="white">
+              <!-- <UserFilled /> -->
+              <img src="/avatar.jpg" class="avatar">
+            </el-icon>
+          </div>
         </template>
         <template #default>
           <div>
@@ -25,7 +26,7 @@ const toSettings = () => {
                 <Right />
               </el-icon>
             </el-button>
-            <el-button type="primary" @click="toSettings">
+            <el-button type="primary" @click="router.push('/settings')">
               设置
               <el-icon>
                 <Right />
@@ -34,7 +35,7 @@ const toSettings = () => {
           </div>
         </template>
       </el-popover>
-      <div class="action">发布文章</div>
+      <el-button class="action" :icon="Upload" @click="router.push('/edit')" color="#E3E7FF">发布文章</el-button>
     </div>
   </div>
 </template>
@@ -51,6 +52,7 @@ const toSettings = () => {
 
 #actions {
   display: flex;
+  align-items: center;
 }
 
 .action {
@@ -61,5 +63,19 @@ p {
   color: white;
   font-weight: bold;
   margin: 0;
+}
+
+.avatar {
+  background-color: #E3E7FF;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#actions .el-button {
+  color: #3A4276;
 }
 </style>

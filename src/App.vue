@@ -46,12 +46,13 @@ import NavBar from '@/components/NavBar.vue';
 
 <style scoped>
 .el-main {
-  height: 90vh;
+  height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
+  padding: 20px 20px 0 20px;
 }
 
-.el-header{
+.el-header {
   padding: 0;
 }
 </style>
