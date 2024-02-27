@@ -1,5 +1,6 @@
 import { BaseModel } from "@/models/base.ts";
 import { LoginModel } from "@/models/login";
+import { UploadBlogModel } from "@/models/upload_blog";
 import axios from "axios";
 
 const api = axios.create({
@@ -26,6 +27,7 @@ const loginUrl = '/user/login'
 const updateAvatarUrl = '/user/update_avatar'
 const updateUsernameUrl = '/user/update_name'
 const updatePasswordUrl = '/user/update_password'
+const uploadBlogUrl = '/article/upload'
 
 /// 注册
 export const register = async (username: string, password: string): Promise<BaseModel> => {
@@ -56,12 +58,28 @@ export const updateUsername = async (newUsername: string): Promise<BaseModel> =>
   return model
 }
 
-/// 修改头像
+/// 修改密码
+export const updatePassword = async (newPassword: string): Promise<BaseModel> => {
+  const res = await api.putForm(updatePasswordUrl, { 'newPassword': newPassword })
+  const model: BaseModel = new BaseModel(res.data)
+  console.log('----- 修改密码响应 -----', model)
+  return model
+}
+
+/// 修改头像(WIP)
 export const updateAvatar = async (file: File) => {
   const res = api.postForm(updateAvatarUrl, { 'file': file })
   console.log('----- 上传头像响应 -----')
   console.log(res)
   return res
+}
+
+/// 发布文章
+export const uploadBlog = async (title: string, desc: string, content: string): Promise<UploadBlogModel> => {
+  const res = await api.postForm(uploadBlogUrl, { 'title': title, 'desc': desc, 'content': content })
+  const model: UploadBlogModel = new UploadBlogModel(res.data)
+  console.log('----- 发布文章响应 -----', model)
+  return model
 }
 
 // /// 查询待办
