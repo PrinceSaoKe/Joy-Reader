@@ -1,8 +1,10 @@
+import { BaseModel } from "@/models/base.ts";
+import { LoginModel } from "@/models/login";
 import axios from "axios";
 
 export const api = axios.create({
   baseURL: '/api',
-  // baseURL: 'http://4bg8a4.natappfree.cc',
+  // baseURL: 'http://mgts2p.natappfree.cc',
   // baseURL: 'http://127.0.0.1:8080',
   // baseURL: 'http://47.113.231.146:8080',
   // baseURL: 'http://127.0.0.1:4523/m1/4033216-0-default',
@@ -11,19 +13,30 @@ export const api = axios.create({
 
 const registerUrl = '/user/register'
 const loginUrl = '/user/login'
+const updateAvatarUrl = '/user/update_avatar'
+const updateUsernameUrl = '/user/update_name'
+const updatePasswordUrl = '/user/update_password'
 
 /// 注册
-export const register = async (username: string, password: string) => {
-  const res = api.postForm(registerUrl, { 'username': username, 'password': password })
-  console.log('----- 注册响应 -----')
-  console.log(res)
-  return res
+export const register = async (username: string, password: string): Promise<BaseModel> => {
+  const res = await api.postForm(registerUrl, { 'username': username, 'password': password })
+  const model: BaseModel = new BaseModel(res.data)
+  console.log('----- 注册响应 -----', model)
+  return model
 }
 
 /// 登录
-export const login = async (username: string, password: string) => {
-  const res = api.postForm(loginUrl, { 'username': username, 'password': password })
-  console.log('----- 登录响应 -----')
+export const login = async (username: string, password: string): Promise<LoginModel> => {
+  const res = await api.postForm(loginUrl, { 'username': username, 'password': password })
+  const model: LoginModel = new LoginModel(res.data)
+  console.log('----- 登录响应 -----', model)
+  return model
+}
+
+/// 修改头像
+export const updateAvatar = async (file: File) => {
+  const res = api.postForm(updateAvatarUrl, { 'file': file })
+  console.log('----- 上传头像响应 -----')
   console.log(res)
   return res
 }

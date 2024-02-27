@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { login } from "@/api/api.ts";
-import "@/models/base.ts";
-import "@/models/user.ts";
+import Button from '@/components/Button.vue';
+import { LoginModel } from "@/models/login";
 import { reactive } from 'vue';
 
 const formData = reactive({
@@ -9,22 +9,9 @@ const formData = reactive({
   password: '',
 })
 
-const submit = () => {
-  login(formData.username, formData.password).then((res) => {
-    const baseModel = reactive<BaseModel>({
-      code: res.data.base.code,
-      message: res.data.base.message,
-    })
-    if (res.data.data != null) {
-      const userData = reactive<UserModel>({
-        username: formData.username,
-        avatarUrl: res.data.data.avatarUrl,
-        token: res.data.data.token,
-      })
-      console.log(userData)
-    }
-    alert(baseModel.message)
-  })
+const submit = async () => {
+  const model: LoginModel = await login(formData.username, formData.password)
+  alert(model.base.message)
 }
 </script>
 
@@ -37,7 +24,7 @@ const submit = () => {
       <el-input v-model="formData.password" type="password" :show-password="true" />
     </el-form-item>
     <div class="center_btn">
-      <el-button @click="submit" color="#AC77E0" :round="true">登录</el-button>
+      <Button :onClick="submit" text="登录"></Button>
     </div>
   </el-form>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
 import { register } from "@/api/api.ts";
-import "@/models/base.ts";
+import Button from '@/components/Button.vue';
+import { BaseModel } from "@/models/base.ts";
+import { reactive } from 'vue';
 
 const formData = reactive({
   username: '',
@@ -9,18 +10,13 @@ const formData = reactive({
   password2: '',
 })
 
-const submit = () => {
+const submit = async () => {
   if (formData.password != formData.password2) {
     alert('两次密码不一致')
     return
   }
-  register(formData.username, formData.password).then((res) => {
-    const baseModel = reactive<BaseModel>({
-      code: res.data.base.code,
-      message: res.data.base.message,
-    })
-    alert(baseModel.message)
-  })
+  const model: BaseModel = await register(formData.username, formData.password)
+  alert(model.message)
 }
 </script>
 
@@ -35,6 +31,17 @@ const submit = () => {
     <el-form-item label="确认密码">
       <el-input v-model="formData.password2" type="password" :show-password="true" />
     </el-form-item>
-    <el-button @click="submit">登录</el-button>
+    <div class="center_btn">
+      <Button :onClick="submit" text="注册"></Button>
+    </div>
   </el-form>
 </template>
+
+<style scoped>
+.center_btn {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+</style>

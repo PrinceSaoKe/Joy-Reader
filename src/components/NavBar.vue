@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Avatar from '@/components/Avatar.vue';
 import router from '@/router';
 import { Right, Upload } from '@element-plus/icons-vue';
 </script>
@@ -9,12 +10,7 @@ import { Right, Upload } from '@element-plus/icons-vue';
     <div id="actions">
       <el-popover placement="bottom-start" :width="200" trigger="hover">
         <template #reference>
-          <div class="action avatar">
-            <el-icon color="white">
-              <!-- <UserFilled /> -->
-              <img src="/avatar.jpg" class="avatar">
-            </el-icon>
-          </div>
+          <Avatar :size="30"></Avatar>
         </template>
         <template #default>
           <div>
@@ -63,16 +59,6 @@ p {
   color: white;
   font-weight: bold;
   margin: 0;
-}
-
-.avatar {
-  background-color: #E3E7FF;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
 }
 
 #actions .el-button {

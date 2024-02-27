@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { login } from "@/api/api.ts";
+import { login, updateAvatar } from "@/api/api.ts";
+import Avatar from '@/components/Avatar.vue';
+import Button from '@/components/Button.vue';
 import { reactive } from 'vue';
 
 const formData = reactive({
@@ -15,52 +17,89 @@ const submit = () => {
   }
   login(formData.username, formData.password)
 }
+
+const submitAvatar = () => {
+  const fileInput = document.querySelector('#avatarInput') as HTMLInputElement
+  console.log(fileInput?.files![0])
+  updateAvatar(fileInput?.files![0])
+}
 </script>
 
 <template>
-  <div id="main">
-    <div id="container">
-      <el-row justify="space-evenly" style="width: 100%;">
-        <el-col :span="8" class="center"><img src="@/assets/logo.png" width="360px" height="480px"></el-col>
-        <el-col :span="8" class="center">
-          <el-form label-position="top" style="width: 360px">
-            <el-form-item label="修改昵称">
-              <el-input v-model="formData.username" />
-            </el-form-item>
-            <el-form-item label="修改密码">
-              <el-input v-model="formData.password" type="password" :show-password="true" />
-            </el-form-item>
-            <el-form-item label="确认密码">
-              <el-input v-model="formData.password2" type="password" :show-password="true" />
-            </el-form-item>
-            <div class="center">
-              <el-button @click="submit">确认并保存</el-button>
-            </div>
-          </el-form></el-col>
-      </el-row>
+  <div id="container">
+    <div>
+      <Avatar :size="360"></Avatar>
+      <div class="center">
+        <div id="avatar_btn"><input type="file" id="avatarInput" @change="submitAvatar">更换<br>头像</div>
+      </div>
     </div>
+    <div id="divider"></div>
+    <el-form label-position="top" style="width: 360px">
+      <el-form-item label="修改昵称">
+        <el-input v-model="formData.username" />
+      </el-form-item>
+      <el-form-item label="修改密码">
+        <el-input v-model="formData.password" type="password" :show-password="true" />
+      </el-form-item>
+      <el-form-item label="确认密码">
+        <el-input v-model="formData.password2" type="password" :show-password="true" />
+      </el-form-item>
+      <div class="center">
+        <Button :onClick="submit" text="确认并保存"></Button>
+      </div>
+    </el-form>
   </div>
 </template>
 
 <style scoped>
-#main {
-  display: flex;
-  justify-content: center;
-}
-
 #container {
   width: 1080px;
-  height: 500px;
+  height: 600px;
   display: flex;
   background-color: #C9C3EF;
-  padding: 30px;
   border-radius: 30px;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .center {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+#divider {
+  background-color: #626DB7;
+  width: 2px;
+  height: 500px;
+}
+
+.el-button {
+  padding: 10px 50px;
+  color: white;
+  font-weight: bold;
+}
+
+#avatar_btn {
+  background-image: linear-gradient(to bottom, #AC77E0, #4E5AA9);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+input {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  outline: none;
+  filter: alpha(opacity=0);
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  opacity: 0;
+  border-radius: 50%;
 }
 </style>
