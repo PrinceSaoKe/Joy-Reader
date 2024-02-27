@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { login, updateAvatar } from "@/api/api.ts";
+import { updateAvatar, updateUsername } from "@/api/api.ts";
 import Avatar from '@/components/Avatar.vue';
 import Button from '@/components/Button.vue';
 import { reactive } from 'vue';
@@ -10,12 +10,14 @@ const formData = reactive({
   password2: '',
 })
 
-const submit = () => {
-  if (formData.password != formData.password2) {
-    alert('两次密码不一致')
-    return
-  }
-  login(formData.username, formData.password)
+const submit = async () => {
+  // if (formData.password != formData.password2) {
+  //   alert('两次密码不一致')
+  //   return
+  // }
+  // login(formData.username, formData.password)
+  const model = await updateUsername(formData.username)
+  alert(model.message)
 }
 
 const submitAvatar = () => {

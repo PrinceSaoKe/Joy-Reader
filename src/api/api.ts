@@ -2,14 +2,24 @@ import { BaseModel } from "@/models/base.ts";
 import { LoginModel } from "@/models/login";
 import axios from "axios";
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: '/api',
-  // baseURL: 'http://mgts2p.natappfree.cc',
   // baseURL: 'http://127.0.0.1:8080',
   // baseURL: 'http://47.113.231.146:8080',
   // baseURL: 'http://127.0.0.1:4523/m1/4033216-0-default',
   timeout: 5000,  // 设置超时时间
 })
+
+/// 设置Token
+export const setToken = () => {
+  const token = localStorage.getItem('token')
+  if (!token) return
+  if (token == api.defaults.headers.common['Authorization']) return
+  api.defaults.headers.common['Authorization'] = token
+  console.log('----- Token已更新 -----')
+}
+
+setToken()
 
 const registerUrl = '/user/register'
 const loginUrl = '/user/login'
@@ -30,6 +40,19 @@ export const login = async (username: string, password: string): Promise<LoginMo
   const res = await api.postForm(loginUrl, { 'username': username, 'password': password })
   const model: LoginModel = new LoginModel(res.data)
   console.log('----- 登录响应 -----', model)
+
+  if (model.data.username != null) localStorage.setItem('username', model.data.username)
+  if (res.data.data?.token != null) localStorage.setItem('token', res.data.data?.token)
+  setToken()
+
+  return model
+}
+
+/// 修改用户名
+export const updateUsername = async (newUsername: string): Promise<BaseModel> => {
+  const res = await api.putForm(updateUsernameUrl, { 'newName': newUsername })
+  const model: BaseModel = new BaseModel(res.data)
+  console.log('----- 修改用户名响应 -----', model)
   return model
 }
 
