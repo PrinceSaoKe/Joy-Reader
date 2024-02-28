@@ -1,4 +1,6 @@
+import { SortType } from "@/constant/enum";
 import { BaseModel } from "@/models/base.ts";
+import { HomeListModel } from "@/models/home_list";
 import { LoginModel } from "@/models/login";
 import { UploadBlogModel } from "@/models/upload_blog";
 import axios from "axios";
@@ -28,6 +30,7 @@ const updateAvatarUrl = '/user/update_avatar'
 const updateUsernameUrl = '/user/update_name'
 const updatePasswordUrl = '/user/update_password'
 const uploadBlogUrl = '/article/upload'
+const getHomeListUrl = '/article/get_list'
 
 /// 注册
 export const register = async (username: string, password: string): Promise<BaseModel> => {
@@ -82,26 +85,19 @@ export const uploadBlog = async (title: string, desc: string, content: string): 
   return model
 }
 
-// /// 查询待办
-// export const readTodo = async (userId, readFinished = false) => {
-//   const res = api.get(readTodoUrl, { 'userId': userId, 'status': readFinished ? 1 : 0 })
-//   console.log('----- 查询响应 -----')
-//   console.log(res)
-//   return res
-// }
+/// 查询文章列表
+export const getHomeList = async (page: number, sort: SortType): Promise<HomeListModel> => {
+  const params = { 'page': page, 'sort': sort }
+  const res = await api.get(getHomeListUrl, { params })
+  const model: HomeListModel = new HomeListModel(res.data)
+  console.log('----- 查询文章列表响应 -----', model)
+  return model
+}
 
 // /// 修改待办
 // export const updateTodo = async (todoId, userId, finished = true) => {
 //   const res = api.put(updateTodoUrl + '/' + todoId, { 'userId': userId, 'status': finished ? 1 : 0 })
 //   console.log('----- 修改响应 -----')
-//   console.log(res)
-//   return res
-// }
-
-// /// 删除待办
-// export const deleteTodo = async (todoId, userId) => {
-//   const res = api.put(deleteTodoUrl + '/' + todoId, { 'userId': userId })
-//   console.log('----- 删除响应 -----')
 //   console.log(res)
 //   return res
 // }

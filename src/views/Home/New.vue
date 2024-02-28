@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { getHomeList } from "@/api/api";
+import { SortType } from "@/constant/enum";
+import { BlogModel } from "@/models/blog";
+import { onMounted, ref } from "vue";
 
-const dataListRef = ref([
-  { title: 'Java', desc: 'Java预览', hot: 30, uploadTime: '2024-01-24', author: '作者' },
-  { title: 'Python', desc: 'Python预览', hot: 30, uploadTime: '2024-01-24', author: '作者' },
-  { title: 'C++', desc: 'C++预览', hot: 30, uploadTime: '2024-01-24', author: '作者' },
-  { title: 'JavaScript', desc: 'JavaScript预览', hot: 30, uploadTime: '2024-01-24', author: '作者' },
-  { title: 'Kotlin', desc: 'Kotlin预览', hot: 30, uploadTime: '2024-01-24', author: '作者' },
-  { title: 'C#', desc: 'C#预览', hot: 30, uploadTime: '2024-01-24', author: '作者' },
-])
+const dataListRef = ref<BlogModel[]>([])
+
+onMounted(async () => {
+  const model = await getHomeList(1, SortType.UPLOAD_TIME)
+  dataListRef.value = model.data
+})
 </script>
 
 <template>
@@ -16,9 +17,9 @@ const dataListRef = ref([
     <el-card v-for="data in dataListRef">
       <h1>{{ data.title }}</h1>
       <p>{{ data.desc }}</p>
-      <span>热度 {{ data.hot }}</span>
-      <span>{{ data.uploadTime }}</span>
-      <span>{{ data.author }}</span>
+      <span>热度 {{ data.clicks }}</span>
+      <span>{{ data.createTime }}</span>
+      <span>{{ data.authorName }}</span>
     </el-card>
   </div>
 </template>
@@ -33,7 +34,7 @@ h1 {
   margin: 0;
 }
 
-span{
+span {
   margin-right: 10px;
 }
 </style>
