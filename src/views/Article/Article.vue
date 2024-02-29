@@ -1,16 +1,32 @@
 <script setup lang="ts">
-import { marked } from 'marked';
-import { ref, watch } from 'vue';
+import { getBlog } from "@/api/api";
+import { BlogModel } from "@/models/blog";
+import { onMounted, ref } from "vue";
+import { useRoute } from 'vue-router';
 
-const mdRef = ref('# Hello World!')
-const mdToHtml = ref('<h1>Hello World!</h1>')
+const route = useRoute()
 
-watch(mdRef, async () => {
-  mdToHtml.value = await marked.parse(mdRef.value, { async: false })
+const blogRef = ref<BlogModel>()
+
+const getData = async () => {
+  blogRef.value = await getBlog(route.params.id as string)
+}
+
+onMounted(() => {
+  getData()
 })
 </script>
 
 <template>
-  <textarea v-model="mdRef"></textarea>
-  <div v-html="mdToHtml"></div>
+  <el-container>
+    <el-header>
+      {{ blogRef?.title }}
+      {{ blogRef?.clicks }}
+      {{ blogRef?.createTime }}
+      {{ blogRef?.authorName }}
+    </el-header>
+    <el-main>
+      <div v-html="blogRef?.content"></div>
+    </el-main>
+  </el-container>
 </template>

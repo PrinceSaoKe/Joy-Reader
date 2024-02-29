@@ -35,4 +35,8 @@
 .el-menu-item {
   font-size: 20px;
 }
+
+.el-main{
+  padding: 10px 20px;
+}
 </style>

@@ -1,5 +1,6 @@
 import { SortType } from "@/constant/enum";
 import { BaseModel } from "@/models/base.ts";
+import { BlogModel } from "@/models/blog";
 import { HomeListModel } from "@/models/home_list";
 import { LoginModel } from "@/models/login";
 import { UploadBlogModel } from "@/models/upload_blog";
@@ -31,6 +32,7 @@ const updateUsernameUrl = '/user/update_name'
 const updatePasswordUrl = '/user/update_password'
 const uploadBlogUrl = '/article/upload'
 const getHomeListUrl = '/article/get_list'
+const getBlogUrl = '/article/get_article'
 
 /// 注册
 export const register = async (username: string, password: string): Promise<BaseModel> => {
@@ -91,6 +93,15 @@ export const getHomeList = async (page: number, sort: SortType): Promise<HomeLis
   const res = await api.get(getHomeListUrl, { params })
   const model: HomeListModel = new HomeListModel(res.data)
   console.log('----- 查询文章列表响应 -----', model)
+  return model
+}
+
+/// 查询文章详情
+export const getBlog = async (articleId: string): Promise<BlogModel> => {
+  const params = { 'articleId': articleId }
+  const res = await api.get(getBlogUrl, { params })
+  const model: BlogModel = new BlogModel(res.data.data)
+  console.log('----- 查询文章详情响应 -----', model)
   return model
 }
 
