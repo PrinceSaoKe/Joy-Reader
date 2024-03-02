@@ -1,10 +1,10 @@
 <script setup lang="ts">
-defineProps<{ size: number }>()
+defineProps<{ size: string }>()
 </script>
 
 <template>
   <div class="avatar">
-    <el-icon color="white" :size="size">
+    <el-icon color="white">
       <!-- <UserFilled /> -->
       <img src="/avatar.jpg" class="avatar">
     </el-icon>
@@ -14,8 +14,8 @@ defineProps<{ size: number }>()
 <style scoped>
 .avatar {
   background-color: #E3E7FF;
-  width: 100%;
-  height: 100%;
+  width: v-bind(size);
+  height: v-bind(size);
   border-radius: 50%;
   justify-content: center;
   align-items: center;

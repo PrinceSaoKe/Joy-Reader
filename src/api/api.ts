@@ -8,9 +8,6 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: '/api',
-  // baseURL: 'http://127.0.0.1:8080',
-  // baseURL: 'http://47.113.231.146:8080',
-  // baseURL: 'http://127.0.0.1:4523/m1/4033216-0-default',
   timeout: 5000,  // 设置超时时间
 })
 

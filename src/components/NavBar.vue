@@ -1,34 +1,20 @@
 <script setup lang="ts">
 import Avatar from '@/components/Avatar.vue';
+import AvatarPopover from '@/components/AvatarPopover.vue';
 import router from '@/router';
-import { Right, Upload } from '@element-plus/icons-vue';
+import { Upload } from '@element-plus/icons-vue';
 </script>
 
 <template>
   <div id="nav_bar">
-    <p @click="router.push('/')">LOGO</p>
+    <img src="/logo.png" width="86.16px" height="44.4px" @click="router.push('/')" />
     <div id="actions">
       <el-popover placement="bottom-start" :width="200" trigger="hover">
         <template #reference>
-          <Avatar :size="30"></Avatar>
+          <Avatar size="30px"></Avatar>
         </template>
         <template #default>
-          <div>
-            <img src="@/assets/logo.png" width="64px" height="64px">
-            <p>用户id</p>
-            <el-button type="primary">
-              个人中心
-              <el-icon>
-                <Right />
-              </el-icon>
-            </el-button>
-            <el-button type="primary" @click="router.push('/settings')">
-              设置
-              <el-icon>
-                <Right />
-              </el-icon>
-            </el-button>
-          </div>
+          <AvatarPopover></AvatarPopover>
         </template>
       </el-popover>
       <el-button class="action" :icon="Upload" @click="router.push('/edit')" color="#E3E7FF">发布文章</el-button>

@@ -26,7 +26,7 @@ onMounted(() => {
       <span>{{ blogRef?.createTime }}</span>
       <span>
         {{ blogRef?.authorName }}
-        <Avatar id="author_avatar" :size="30"></Avatar>
+        <Avatar id="author_avatar" size="30px"></Avatar>
       </span>
     </div>
     <div id="blog_main">

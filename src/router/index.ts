@@ -17,6 +17,12 @@ const routes = [
       { path: 'register', component: () => import('@/views/Auth/Register.vue') },
     ]
   },
+  {
+    path: '/my', redirect: '/my/article', component: () => import('@/views/My/My.vue'), children: [
+      { path: 'article', component: () => import('@/views/Auth/Login.vue') },
+      { path: 'likes', component: () => import('@/views/Auth/Register.vue') },
+    ]
+  },
 ]
 
 const router = createRouter({

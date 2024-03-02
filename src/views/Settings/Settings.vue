@@ -35,7 +35,7 @@ const submitAvatar = () => {
 <template>
   <div id="container">
     <div>
-      <Avatar :size="360"></Avatar>
+      <Avatar size="360px"></Avatar>
       <div class="center">
         <div id="avatar_btn"><input type="file" id="avatarInput" @change="submitAvatar">更换<br>头像</div>
       </div>
