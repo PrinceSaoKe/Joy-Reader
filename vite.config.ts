@@ -26,7 +26,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': {
-        target: 'http://77syt3.natappfree.cc',
+        target: 'http://120.24.176.40:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
