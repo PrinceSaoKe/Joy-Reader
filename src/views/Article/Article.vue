@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getBlog } from "@/api/api";
+import Avatar from '@/components/Avatar.vue';
 import { BlogModel } from "@/models/blog";
 import { onMounted, ref } from "vue";
 import { useRoute } from 'vue-router';
@@ -18,15 +19,56 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-container>
-    <el-header>
-      {{ blogRef?.title }}
-      {{ blogRef?.clicks }}
-      {{ blogRef?.createTime }}
-      {{ blogRef?.authorName }}
-    </el-header>
-    <el-main>
+  <div id="blog_area">
+    <div id="blog_header">
+      <h1>{{ blogRef?.title }}</h1>
+      <span>{{ blogRef?.clicks }}</span>
+      <span>{{ blogRef?.createTime }}</span>
+      <span>
+        {{ blogRef?.authorName }}
+        <Avatar id="author_avatar" :size="30"></Avatar>
+      </span>
+    </div>
+    <div id="blog_main">
       <div v-html="blogRef?.content"></div>
-    </el-main>
-  </el-container>
+    </div>
+    <div style="height: 20px;"></div>
+  </div>
 </template>
+
+<style scoped>
+#blog_area {
+  margin: 0 50px 40px 50px;
+  width: 100%;
+}
+
+#blog_header {
+  background-color: #C9C3EF;
+  border-radius: 30px 30px 0 0;
+  padding: 20px 35px 25px 35px;
+}
+
+#blog_header span {
+  display: inline-block;
+}
+
+#blog_header span:last-child {
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+#author_avatar {
+  margin-left: 10px;
+}
+
+#blog_main {
+  background-color: #E3E7FF;
+  padding: 20px 35px;
+  border-radius: 0 0 30px 30px;
+}
+
+h1 {
+  margin: 15px 0;
+}
+</style>

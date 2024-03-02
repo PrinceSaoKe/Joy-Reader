@@ -41,7 +41,7 @@ import { Right, Upload } from '@element-plus/icons-vue';
   display: flex;
   justify-content: space-between;
   background-color: #626DB7;
-  height: 80%;
+  height: 100%;
   padding: 0 100px;
   align-items: center;
 }

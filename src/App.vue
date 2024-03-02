@@ -45,14 +45,15 @@ import NavBar from '@/components/NavBar.vue';
 </template>
 
 <style scoped>
+.el-header {
+  padding: 0;
+  height: 50px;
+}
+
 .el-main {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 50px);
   display: flex;
   justify-content: center;
   padding: 20px 20px 0 20px;
-}
-
-.el-header {
-  padding: 0;
 }
 </style>
