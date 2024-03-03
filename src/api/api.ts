@@ -68,12 +68,17 @@ export const updatePassword = async (newPassword: string): Promise<BaseModel> =>
   return model
 }
 
-/// 修改头像(WIP)
-export const updateAvatar = async (file: File) => {
-  const res = api.postForm(updateAvatarUrl, { 'file': file })
-  console.log('----- 上传头像响应 -----')
-  console.log(res)
-  return res
+/// 修改头像
+export const updateAvatar = async (file: File): Promise<BaseModel> => {
+  const res = await api.postForm(updateAvatarUrl, { 'file': file })
+  const model: BaseModel = new BaseModel(res.data)
+  console.log('----- 上传头像响应 -----', model)
+
+  if (res.data.data != null) {
+    localStorage.setItem('avatarUrl', res.data.data)
+    location.reload()
+  }
+  return model
 }
 
 /// 发布文章

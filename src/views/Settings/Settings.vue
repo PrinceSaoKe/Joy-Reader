@@ -25,10 +25,11 @@ const submit = async () => {
   }
 }
 
-const submitAvatar = () => {
+const submitAvatar = async () => {
   const fileInput = document.querySelector('#avatarInput') as HTMLInputElement
   console.log(fileInput?.files![0])
-  updateAvatar(fileInput?.files![0])
+  const model = await updateAvatar(fileInput?.files![0])
+  alert(model.message)
 }
 </script>
 

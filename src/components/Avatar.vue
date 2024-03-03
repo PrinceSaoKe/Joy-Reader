@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
+
 defineProps<{ size: string }>()
+
+const avatarUrlRef = ref()
+
+onMounted(() => {
+  avatarUrlRef.value = localStorage.getItem('avatarUrl')
+})
 </script>
 
 <template>
   <div class="avatar">
     <el-icon color="white">
       <!-- <UserFilled /> -->
-      <img src="/avatar.jpg" class="avatar">
+      <img :src="avatarUrlRef" class="avatar" style="object-fit: cover;">
     </el-icon>
   </div>
 </template>
