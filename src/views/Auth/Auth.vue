@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <img src="@/assets/logo.png" width="360px" height="480px">
+    <img src="/mascot.png" width="360px" height="480px">
     <div id="divider"></div>
     <router-view></router-view>
   </div>

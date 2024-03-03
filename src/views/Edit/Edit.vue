@@ -4,7 +4,7 @@ import { marked } from 'marked';
 import { ref, watch } from 'vue';
 
 const titleRef = ref('')
-const descRef = ref('请输入简介')
+const descRef = ref('')
 const mdRef = ref('# Hello World!')
 const mdToHtmlRef = ref('<h1>Hello World!</h1>')
 
@@ -12,19 +12,18 @@ watch(mdRef, async () => {
   mdToHtmlRef.value = await marked.parse(mdRef.value, { async: false })
 })
 
+/// 剔除文章中的markdown语法符号，剔除所有html标签
 const removeHTML = (htmlStr: string): string => {
-  // return mdToHtmlRef.value.substring(0, 30)
-
-  //定义script的正则表达式，去除js可以防止注入
+  // 定义script的正则表达式，去除js可以防止注入
   const scriptRegex: RegExp = new RegExp('<script[^>]*?>[\\s\\S]*?<\\/script>', 'gm')
 
-  //定义style的正则表达式，去除style样式，防止css代码过多时只截取到css样式代码
+  // 定义style的正则表达式，去除style样式，防止css代码过多时只截取到css样式代码
   const styleRegex: RegExp = new RegExp('<style[^>]*?>[\\s\\S]*?<\\/style>', 'gm')
 
-  //定义HTML标签的正则表达式，去除标签，只提取文字内容
+  // 定义HTML标签的正则表达式，去除标签，只提取文字内容
   const htmlRegex: RegExp = new RegExp('<[^>]+>', 'gm')
 
-  //定义空格,回车,换行符,制表符
+  // 定义空格,回车,换行符,制表符
   const spaceRegex: RegExp = new RegExp('\\s*|\t|\r|\n', 'gm')
 
   // 过滤script标签
@@ -34,12 +33,13 @@ const removeHTML = (htmlStr: string): string => {
   // 过滤html标签
   htmlStr = htmlStr.replace(htmlRegex, "");
   // 过滤空格等
-  htmlStr = htmlStr.replace(spaceRegex, "");
+  htmlStr = htmlStr.replace(spaceRegex, " ");
+
   return htmlStr.trim(); // 返回文本字符串
 }
 
 const submit = async () => {
-  descRef.value = removeHTML(mdToHtmlRef.value)
+  descRef.value = removeHTML(mdToHtmlRef.value).substring(0, 100)
   const model = await uploadBlog(titleRef.value, descRef.value, mdToHtmlRef.value)
   alert(model.base.message)
   // console.log(titleRef.value, descRef.value, mdToHtmlRef.value)
