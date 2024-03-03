@@ -1,12 +1,24 @@
 <script setup lang="ts">
 import { uploadBlog } from '@/api/api';
-import { marked } from 'marked';
+import hljs from 'highlight.js';
+import { Marked } from 'marked';
+import { markedHighlight } from "marked-highlight";
 import { ref, watch } from 'vue';
 
 const titleRef = ref('')
 const descRef = ref('')
 const mdRef = ref('# Hello World!')
-const mdToHtmlRef = ref('<h1>Hello World!</h1>')
+const mdToHtmlRef = ref('')
+
+const marked = new Marked(
+  markedHighlight({
+    langPrefix: 'hljs language-',
+    highlight(code, lang) {
+      const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+      return hljs.highlight(code, { language }).value
+    }
+  })
+)
 
 watch(mdRef, async () => {
   mdToHtmlRef.value = await marked.parse(mdRef.value, { async: false })
