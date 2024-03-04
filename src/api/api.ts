@@ -24,12 +24,15 @@ setToken()
 
 const registerUrl = '/user/register'
 const loginUrl = '/user/login'
+const getUserUrl = '/user/get_user'
 const updateAvatarUrl = '/user/update_avatar'
 const updateUsernameUrl = '/user/update_name'
 const updatePasswordUrl = '/user/update_password'
 const uploadBlogUrl = '/article/upload'
 const getHomeListUrl = '/article/get_list'
 const getBlogUrl = '/article/get_article'
+const getUserBlogListUrl = '/user/get_user_article'
+const getUserLikesListUrl = '/user/get_user_likes'
 
 /// 注册
 export const register = async (username: string, password: string): Promise<BaseModel> => {
@@ -49,6 +52,14 @@ export const login = async (username: string, password: string): Promise<LoginMo
   if (res.data.data?.token != null) localStorage.setItem('token', res.data.data?.token)
   setToken()
 
+  return model
+}
+
+/// 查询用户信息（WIP）
+export const getUser = async (): Promise<LoginModel> => {
+  const res = await api.get(getUserUrl)
+  const model: LoginModel = new LoginModel(res.data.data)
+  console.log('----- 查询用户信息响应 -----', model)
   return model
 }
 
@@ -89,7 +100,7 @@ export const uploadBlog = async (title: string, desc: string, content: string): 
   return model
 }
 
-/// 查询文章列表
+/// 查询首页文章列表
 export const getHomeList = async (page: number, sort: SortType): Promise<HomeListModel> => {
   const params = { 'page': page, 'sort': sort }
   const res = await api.get(getHomeListUrl, { params })
@@ -107,10 +118,18 @@ export const getBlog = async (articleId: string): Promise<BlogModel> => {
   return model
 }
 
-// /// 修改待办
-// export const updateTodo = async (todoId, userId, finished = true) => {
-//   const res = api.put(updateTodoUrl + '/' + todoId, { 'userId': userId, 'status': finished ? 1 : 0 })
-//   console.log('----- 修改响应 -----')
-//   console.log(res)
-//   return res
-// }
+/// 查询用户发布的文章列表（WIP）
+export const getUserBlogList = async (): Promise<HomeListModel> => {
+  const res = await api.get(getUserBlogListUrl)
+  const model: HomeListModel = new HomeListModel(res.data.data)
+  console.log('----- 查询用户发布的文章列表详情响应 -----', model)
+  return model
+}
+
+/// 查询用户点赞的文章列表（WIP）
+export const getUserLikesList = async (): Promise<HomeListModel> => {
+  const res = await api.get(getUserLikesListUrl)
+  const model: HomeListModel = new HomeListModel(res.data.data)
+  console.log('----- 查询用户点赞的文章列表详情响应 -----', model)
+  return model
+}
