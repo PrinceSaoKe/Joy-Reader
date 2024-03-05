@@ -31,5 +31,23 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'static/js/[name]-[hash].js',
+        entryFileNames: 'static/js/[name]-[hash].js',
+        assetFileNames: 'static/[ext]/[name]-[hash][extname]',
+        //manualChunks 两种使用形式
+        // manualChunks:{
+        //   elementPlus:['element-plus']
+        // }
+        manualChunks(id) {
+          if (id.includes('element-plus')) {
+            return 'element-plus';
+          }
+        }
+      }
+    }
   }
 })

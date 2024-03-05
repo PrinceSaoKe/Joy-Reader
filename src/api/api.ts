@@ -1,6 +1,7 @@
 import { SortType } from "@/constant/enum";
 import { BaseModel } from "@/models/base.ts";
 import { BlogModel } from "@/models/blog";
+import { CommentListModel } from "@/models/comment_list";
 import { HomeListModel } from "@/models/home_list";
 import { LoginModel } from "@/models/login";
 import { MyListModel } from "@/models/my_list";
@@ -36,6 +37,10 @@ const getHomeListUrl = '/article/get_list'
 const getBlogUrl = '/article/get_article'
 const getUserBlogListUrl = '/user/get_user_article'
 const getUserLikesListUrl = '/user/get_user_likes'
+const likeBlogUrl = '/article/like'
+const commentBlogUrl = '/comment'
+const likeCommentUrl = '/comment/like'
+const getCommentUrl = '/comment'
 
 /// 注册
 export const register = async (username: string, password: string): Promise<BaseModel> => {
@@ -144,5 +149,38 @@ export const getUserLikesList = async (): Promise<MyListModel> => {
   const res = await api.get(getUserLikesListUrl)
   const model: MyListModel = new MyListModel(res.data)
   console.log('----- 查询用户点赞的文章列表详情响应 -----', model)
+  return model
+}
+
+/// 点赞文章
+export const likeBlog = async (blogId: string): Promise<BaseModel> => {
+  const res = await api.postForm(likeBlogUrl, { 'articleId': blogId })
+  const model: BaseModel = new BaseModel(res.data)
+  console.log('----- 点赞文章响应 -----', model)
+  return model
+}
+
+/// 评论文章
+export const commentBlog = async (fatherId: string, content: string, level: number): Promise<BaseModel> => {
+  const res = await api.postForm(commentBlogUrl, { 'fatherId': fatherId, 'content': content, level: level })
+  const model: BaseModel = new BaseModel(res.data)
+  console.log('----- 评论响应 -----', model)
+  return model
+}
+
+/// 点赞评论
+export const likeComment = async (commentId: string): Promise<BaseModel> => {
+  const res = await api.postForm(likeCommentUrl, { 'commentId': commentId })
+  const model: BaseModel = new BaseModel(res.data)
+  console.log('----- 点赞评论响应 -----', model)
+  return model
+}
+
+/// 查询评论
+export const getComment = async (articleId: string): Promise<CommentListModel> => {
+  const params = { 'articleId': articleId }
+  const res = await api.get(getCommentUrl, { params })
+  const model: CommentListModel = new CommentListModel(res.data)
+  console.log('----- 查询评论响应 -----', model)
   return model
 }
