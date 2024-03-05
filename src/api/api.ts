@@ -3,10 +3,13 @@ import { BaseModel } from "@/models/base.ts";
 import { BlogModel } from "@/models/blog";
 import { HomeListModel } from "@/models/home_list";
 import { LoginModel } from "@/models/login";
+import { MyListModel } from "@/models/my_list";
 import { UploadBlogModel } from "@/models/upload_blog";
+import { UserModel } from "@/models/user";
 import axios from "axios";
 
 const api = axios.create({
+  // baseURL: '/127.0.0.1:8080',
   baseURL: '/api',
   timeout: 5000,  // 设置超时时间
 })
@@ -48,17 +51,23 @@ export const login = async (username: string, password: string): Promise<LoginMo
   const model: LoginModel = new LoginModel(res.data)
   console.log('----- 登录响应 -----', model)
 
-  if (model.data.username != null) localStorage.setItem('username', model.data.username)
   if (res.data.data?.token != null) localStorage.setItem('token', res.data.data?.token)
   setToken()
+  await getUser().then(() => location.reload())
 
   return model
 }
 
-/// 查询用户信息（WIP）
-export const getUser = async (): Promise<LoginModel> => {
+/// 查询用户信息
+export const getUser = async (): Promise<UserModel> => {
   const res = await api.get(getUserUrl)
-  const model: LoginModel = new LoginModel(res.data.data)
+  const model: UserModel = new UserModel(res.data)
+
+  // 将用户信息存储到本地
+  localStorage.setItem('userId', model.data.userId)
+  localStorage.setItem('username', model.data.username)
+  localStorage.setItem('avatarUrl', model.data.avatarUrl)
+
   console.log('----- 查询用户信息响应 -----', model)
   return model
 }
@@ -68,6 +77,9 @@ export const updateUsername = async (newUsername: string): Promise<BaseModel> =>
   const res = await api.putForm(updateUsernameUrl, { 'newName': newUsername })
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 修改用户名响应 -----', model)
+
+  await getUser().then(() => location.reload())
+
   return model
 }
 
@@ -76,6 +88,9 @@ export const updatePassword = async (newPassword: string): Promise<BaseModel> =>
   const res = await api.putForm(updatePasswordUrl, { 'newPassword': newPassword })
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 修改密码响应 -----', model)
+
+  await getUser().then(() => location.reload())
+
   return model
 }
 
@@ -85,10 +100,8 @@ export const updateAvatar = async (file: File): Promise<BaseModel> => {
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 上传头像响应 -----', model)
 
-  if (res.data.data != null) {
-    localStorage.setItem('avatarUrl', res.data.data)
-    location.reload()
-  }
+  await getUser().then(() => location.reload())
+
   return model
 }
 
@@ -105,7 +118,7 @@ export const getHomeList = async (page: number, sort: SortType): Promise<HomeLis
   const params = { 'page': page, 'sort': sort }
   const res = await api.get(getHomeListUrl, { params })
   const model: HomeListModel = new HomeListModel(res.data)
-  console.log('----- 查询文章列表响应 -----', model)
+  console.log('----- 查询文章列表响应 -----', res)
   return model
 }
 
@@ -118,18 +131,18 @@ export const getBlog = async (articleId: string): Promise<BlogModel> => {
   return model
 }
 
-/// 查询用户发布的文章列表（WIP）
-export const getUserBlogList = async (): Promise<HomeListModel> => {
+/// 查询用户发布的文章列表
+export const getUserBlogList = async (): Promise<MyListModel> => {
   const res = await api.get(getUserBlogListUrl)
-  const model: HomeListModel = new HomeListModel(res.data.data)
+  const model: MyListModel = new MyListModel(res.data)
   console.log('----- 查询用户发布的文章列表详情响应 -----', model)
   return model
 }
 
 /// 查询用户点赞的文章列表（WIP）
-export const getUserLikesList = async (): Promise<HomeListModel> => {
+export const getUserLikesList = async (): Promise<MyListModel> => {
   const res = await api.get(getUserLikesListUrl)
-  const model: HomeListModel = new HomeListModel(res.data.data)
+  const model: MyListModel = new MyListModel(res.data)
   console.log('----- 查询用户点赞的文章列表详情响应 -----', model)
   return model
 }

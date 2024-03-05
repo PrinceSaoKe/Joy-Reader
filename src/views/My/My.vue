@@ -10,7 +10,7 @@ const pageIndexRef = ref(0)
 const dataListRef = ref<BlogModel[]>([])
 
 const loadPage = async (pageIndex: number) => {
-  if (pageIndexRef.value == pageIndex) return
+  // if (pageIndexRef.value == pageIndex) return
 
   pageIndexRef.value = pageIndex
 
@@ -20,6 +20,7 @@ const loadPage = async (pageIndex: number) => {
 
 onMounted(() => {
   usernameRef.value = localStorage.getItem('username')
+  loadPage(0)
 })
 </script>
 
