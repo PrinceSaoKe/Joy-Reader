@@ -10,7 +10,7 @@ import { UserModel } from "@/models/user";
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: '/127.0.0.1:8080',
+  // baseURL: 'http://120.24.176.40:8080',
   baseURL: '/api',
   timeout: 5000,  // 设置超时时间
 })

@@ -7,10 +7,12 @@ import { onMounted, ref } from "vue";
 
 const dataListRef = ref<BlogModel[]>([])
 const currPageRef = ref(1)
+const totalPageRef = ref<number>(0)
 
 const getDataList = async () => {
   const model = await getHomeList(currPageRef.value, SortType.UPLOAD_TIME)
   dataListRef.value = model.data
+  totalPageRef.value = model.totalPages
 }
 
 const onPageChange = (page: number) => {
@@ -27,7 +29,8 @@ onMounted(() => {
   <div>
     <HomeList :dataList="dataListRef"></HomeList>
     <div class="bottom_center">
-      <el-pagination layout="prev, pager, next, jumper" :total="100" @current-change="onPageChange" background />
+      <el-pagination layout="prev, pager, next, jumper" :total="totalPageRef" @current-change="onPageChange"
+        background />
     </div>
   </div>
 </template>

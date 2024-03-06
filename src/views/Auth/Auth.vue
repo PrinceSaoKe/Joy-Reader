@@ -15,6 +15,7 @@
   justify-content: space-evenly;
   display: flex;
   align-items: center;
+  margin: auto 0;
 }
 
 #divider {

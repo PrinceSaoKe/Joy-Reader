@@ -32,7 +32,7 @@ export default defineConfig({
       }
     }
   },
-  build: {
+  build: {  
     rollupOptions: {
       output: {
         chunkFileNames: 'static/js/[name]-[hash].js',
