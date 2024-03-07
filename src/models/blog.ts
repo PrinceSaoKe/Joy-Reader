@@ -2,6 +2,7 @@ export class BlogModel {
   readonly blogId: string
   readonly authorId: string
   readonly authorName: string
+  readonly authorAvatarUrl: string
   readonly title: string
   readonly desc: string
   readonly content: string
@@ -13,6 +14,7 @@ export class BlogModel {
     this.blogId = res.articleId
     this.authorId = res.authorId
     this.authorName = res.authorName
+    this.authorAvatarUrl = res.authorAvatarUrl
     this.title = res.title
     this.desc = res.desc
     this.content = res.content

@@ -2,6 +2,7 @@
 import { updateAvatar, updatePassword, updateUsername } from "@/api/api.ts";
 import Avatar from '@/components/Avatar.vue';
 import Button from '@/components/Button.vue';
+import router from "@/router";
 import { reactive } from 'vue';
 
 const formData = reactive({
@@ -20,8 +21,9 @@ const submit = async () => {
       alert('两次密码不一致')
       return
     }
-    const model1 = await updatePassword(formData.password)
-    alert(model1.message)
+    const model = await updatePassword(formData.password)
+    alert(model.message)
+    if (model.code == 0) router.push('/auth')
   }
 }
 

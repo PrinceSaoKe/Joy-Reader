@@ -24,7 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div style="width: 100%;">
     <div id="blog_area">
       <div id="blog_header">
         <h1>{{ blogRef?.title }}</h1>
@@ -32,7 +32,7 @@ onMounted(() => {
         <span>{{ blogRef?.createTime }}</span>
         <span>
           {{ blogRef?.authorName }}
-          <Avatar id="author_avatar" size="30px"></Avatar>
+          <Avatar id="author_avatar" size="30px" :avatar-url="blogRef?.authorAvatarUrl"></Avatar>
         </span>
       </div>
       <div id="blog_main">

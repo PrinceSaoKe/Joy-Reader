@@ -8,11 +8,12 @@ import { MyListModel } from "@/models/my_list";
 import { UploadBlogModel } from "@/models/upload_blog";
 import { UserModel } from "@/models/user";
 import axios from "axios";
+import QueryString from "qs";
 
 const api = axios.create({
   // baseURL: 'http://120.24.176.40:8080',
   baseURL: '/api',
-  timeout: 5000,  // 设置超时时间
+  timeout: 20000,  // 设置超时时间
 })
 
 /// 设置Token
@@ -44,7 +45,7 @@ const getCommentUrl = '/comment'
 
 /// 注册
 export const register = async (username: string, password: string): Promise<BaseModel> => {
-  const res = await api.postForm(registerUrl, { 'username': username, 'password': password })
+  const res = await api.post(registerUrl, QueryString.stringify({ 'username': username, 'password': password }))
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 注册响应 -----', model)
   return model
@@ -52,7 +53,7 @@ export const register = async (username: string, password: string): Promise<Base
 
 /// 登录
 export const login = async (username: string, password: string): Promise<LoginModel> => {
-  const res = await api.postForm(loginUrl, { 'username': username, 'password': password })
+  const res = await api.post(loginUrl, QueryString.stringify({ 'username': username, 'password': password }))
   const model: LoginModel = new LoginModel(res.data)
   console.log('----- 登录响应 -----', model)
 
@@ -79,7 +80,7 @@ export const getUser = async (): Promise<UserModel> => {
 
 /// 修改用户名
 export const updateUsername = async (newUsername: string): Promise<BaseModel> => {
-  const res = await api.putForm(updateUsernameUrl, { 'newName': newUsername })
+  const res = await api.put(updateUsernameUrl, QueryString.stringify({ 'newName': newUsername }))
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 修改用户名响应 -----', model)
 
@@ -90,7 +91,7 @@ export const updateUsername = async (newUsername: string): Promise<BaseModel> =>
 
 /// 修改密码
 export const updatePassword = async (newPassword: string): Promise<BaseModel> => {
-  const res = await api.putForm(updatePasswordUrl, { 'newPassword': newPassword })
+  const res = await api.put(updatePasswordUrl, QueryString.stringify({ 'newPassword': newPassword }))
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 修改密码响应 -----', model)
 
@@ -101,7 +102,7 @@ export const updatePassword = async (newPassword: string): Promise<BaseModel> =>
 
 /// 修改头像
 export const updateAvatar = async (file: File): Promise<BaseModel> => {
-  const res = await api.postForm(updateAvatarUrl, { 'file': file })
+  const res = await api.post(updateAvatarUrl, QueryString.stringify({ 'file': file }))
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 上传头像响应 -----', model)
 
@@ -112,7 +113,7 @@ export const updateAvatar = async (file: File): Promise<BaseModel> => {
 
 /// 发布文章
 export const uploadBlog = async (title: string, desc: string, content: string): Promise<UploadBlogModel> => {
-  const res = await api.postForm(uploadBlogUrl, { 'title': title, 'desc': desc, 'content': content })
+  const res = await api.post(uploadBlogUrl, QueryString.stringify({ 'title': title, 'desc': desc, 'content': content }))
   const model: UploadBlogModel = new UploadBlogModel(res.data)
   console.log('----- 发布文章响应 -----', model)
   return model
@@ -154,7 +155,7 @@ export const getUserLikesList = async (): Promise<MyListModel> => {
 
 /// 点赞文章
 export const likeBlog = async (blogId: string): Promise<BaseModel> => {
-  const res = await api.postForm(likeBlogUrl, { 'articleId': blogId })
+  const res = await api.post(likeBlogUrl, QueryString.stringify({ 'articleId': blogId }))
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 点赞文章响应 -----', model)
   return model
@@ -162,7 +163,7 @@ export const likeBlog = async (blogId: string): Promise<BaseModel> => {
 
 /// 评论文章
 export const commentBlog = async (fatherId: string, content: string, level: number): Promise<BaseModel> => {
-  const res = await api.postForm(commentBlogUrl, { 'fatherId': fatherId, 'content': content, level: level })
+  const res = await api.post(commentBlogUrl, QueryString.stringify({ 'fatherId': fatherId, 'content': content, level: level }))
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 评论响应 -----', model)
   return model
@@ -170,7 +171,7 @@ export const commentBlog = async (fatherId: string, content: string, level: numb
 
 /// 点赞评论
 export const likeComment = async (commentId: string): Promise<BaseModel> => {
-  const res = await api.postForm(likeCommentUrl, { 'commentId': commentId })
+  const res = await api.post(likeCommentUrl, QueryString.stringify({ 'commentId': commentId }))
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 点赞评论响应 -----', model)
   return model

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-defineProps<{ size: string }>()
+defineProps<{ size: string, avatarUrl?: string }>()
 
 const avatarUrlRef = ref()
 
@@ -13,8 +13,7 @@ onMounted(() => {
 <template>
   <div class="avatar">
     <el-icon color="white">
-      <!-- <UserFilled /> -->
-      <img :src="avatarUrlRef" class="avatar" style="object-fit: cover;">
+      <img :src="avatarUrl ?? avatarUrlRef" class="avatar" style="object-fit: cover;">
     </el-icon>
   </div>
 </template>

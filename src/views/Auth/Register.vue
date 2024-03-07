@@ -2,6 +2,7 @@
 import { register } from "@/api/api.ts";
 import Button from '@/components/Button.vue';
 import { BaseModel } from "@/models/base.ts";
+import router from '@/router';
 import { reactive } from 'vue';
 
 const formData = reactive({
@@ -17,6 +18,7 @@ const submit = async () => {
   }
   const model: BaseModel = await register(formData.username, formData.password)
   alert(model.message)
+  if (model.code == 200) router.push('/auth')
 }
 </script>
 
