@@ -21,17 +21,17 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  server: {
-    port: 5173,
-    open: true,
-    proxy: {
-      '/api': {
-        target: 'http://120.24.176.40:8080',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  },
+  // server: {
+  //   port: 5173,
+  //   open: true,
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://120.24.176.40:8080',
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/api/, '')
+  //     }
+  //   }
+  // },
   build: {  
     rollupOptions: {
       output: {

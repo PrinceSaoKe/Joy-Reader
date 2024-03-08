@@ -2,12 +2,19 @@
 import Avatar from '@/components/Avatar.vue';
 import router from '@/router';
 import { Right } from '@element-plus/icons-vue';
+import { onMounted, ref } from 'vue';
+
+const usernameRef = ref()
+
+onMounted(() => {
+  usernameRef.value = localStorage.getItem('username')
+})
 </script>
 
 <template>
   <div id="popover">
     <Avatar size="70px" style="margin: 0 auto;"></Avatar>
-    <p>用户id</p>
+    <p>{{ usernameRef }}</p>
     <el-button @click="router.push('/my')">
       个人中心
       <el-icon>

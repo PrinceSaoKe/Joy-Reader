@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getBlog, getComment } from "@/api/api";
+import { commentBlog, getBlog, getComment } from "@/api/api";
 import Avatar from '@/components/Avatar.vue';
 import Comment from "@/components/Comment.vue";
 import { BlogModel } from "@/models/blog";
@@ -16,6 +16,12 @@ const commentRef = ref('')
 const getData = async () => {
   blogRef.value = await getBlog(route.params.id as string)
   commentListRef.value = (await getComment(route.params.id as string)).data
+}
+
+const uploadComment = () => {
+  commentBlog(route.params.id as string, commentRef.value, 1).then(() => {
+    location.reload()
+  })
 }
 
 onMounted(() => {
@@ -40,7 +46,10 @@ onMounted(() => {
       </div>
     </div>
     <div id="comment_area">
-      <h2>评论区</h2>
+      <div style="display: flex; justify-content: space-between;">
+        <h2>评论区</h2>
+        <el-button @click="uploadComment">发布</el-button>
+      </div>
       <el-input v-model="commentRef" type="textarea" :rows="5" resize="none" placeholder="在此输入评论..."></el-input>
       <div style="height: 10px;"></div>
       <Comment :data="comment" v-for="comment in commentListRef"></Comment>

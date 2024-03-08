@@ -6,7 +6,7 @@ defineProps<{ size: string, avatarUrl?: string }>()
 const avatarUrlRef = ref()
 
 onMounted(() => {
-  avatarUrlRef.value = localStorage.getItem('avatarUrl')
+  avatarUrlRef.value = localStorage.getItem('avatarUrl') ?? 'http://west2-work4-pany0593.oss-cn-shenzhen.aliyuncs.com/avatar/default-avatar.png'
 })
 </script>
 

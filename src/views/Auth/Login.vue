@@ -2,7 +2,6 @@
 import { login } from "@/api/api.ts";
 import Button from '@/components/Button.vue';
 import { LoginModel } from "@/models/login";
-import router from '@/router';
 import { reactive } from 'vue';
 
 const formData = reactive({
@@ -13,7 +12,7 @@ const formData = reactive({
 const submit = async () => {
   const model: LoginModel = await login(formData.username, formData.password)
   alert(model.base.message)
-  if (model.base.code == 200) router.push('/')
+  if (model.base.code == 0) window.location.href = '/'
 }
 </script>
 
@@ -27,6 +26,8 @@ const submit = async () => {
     </el-form-item>
     <div class="center_btn">
       <Button :onClick="submit" text="登录"></Button>
+      <div style="width: 30px;"></div>
+      <RouterLink to="/auth/register"><Button text="去注册"></Button></RouterLink>
     </div>
   </el-form>
 </template>

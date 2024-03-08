@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ onClick: Function, text: string }>()
+defineProps<{ onClick?: Function, text: string }>()
 </script>
 
 <template>

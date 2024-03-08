@@ -11,8 +11,8 @@ import axios from "axios";
 import QueryString from "qs";
 
 const api = axios.create({
-  // baseURL: 'http://120.24.176.40:8080',
-  baseURL: '/api',
+  baseURL: 'http://120.24.176.40:8080',
+  // baseURL: '/api',
   timeout: 20000,  // 设置超时时间
 })
 
@@ -59,7 +59,7 @@ export const login = async (username: string, password: string): Promise<LoginMo
 
   if (res.data.data?.token != null) localStorage.setItem('token', res.data.data?.token)
   setToken()
-  await getUser().then(() => location.reload())
+  await getUser()
 
   return model
 }
@@ -102,7 +102,9 @@ export const updatePassword = async (newPassword: string): Promise<BaseModel> =>
 
 /// 修改头像
 export const updateAvatar = async (file: File): Promise<BaseModel> => {
-  const res = await api.post(updateAvatarUrl, QueryString.stringify({ 'file': file }))
+  const formData = new FormData()
+  formData.append('file', file)
+  const res = await api.post(updateAvatarUrl, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
   const model: BaseModel = new BaseModel(res.data)
   console.log('----- 上传头像响应 -----', model)
 
