@@ -4,10 +4,12 @@
 
 ## 遇到的问题
 
-- 拿到的Token应该存储在哪里
+- √ 拿到的Token应该存储在哪里
 - 页面初始化要执行的逻辑放在onMounted和直接放在`<script>`里有什么区别
 - √ 静态文件如logo等应该存放在public文件夹里还是`src/assets/`里，有什么区别
-- element-plus的popover如何改变小三角尖的背景色
+- √ element-plus的popover如何改变小三角尖的背景色
+- 代码块不换行，无高亮
+- 自己封装的组件无法显示innerText，无法使用@click
 
 ## 亮点
 

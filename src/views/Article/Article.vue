@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { commentBlog, getBlog, getComment } from "@/api/api";
+import { commentBlog, getBlog, getComment, likeBlog } from "@/api/api";
 import Avatar from '@/components/Avatar.vue';
 import Comment from "@/components/Comment.vue";
 import { BlogModel } from "@/models/blog";
@@ -27,6 +27,11 @@ const uploadComment = () => {
 onMounted(() => {
   getData()
 })
+
+const like = async () => {
+  const model = await likeBlog(route.params.id as string)
+  alert(model.message)
+}
 </script>
 
 <template>
@@ -43,6 +48,11 @@ onMounted(() => {
       </div>
       <div id="blog_main">
         <div v-html="blogRef?.content"></div>
+        <el-affix target="#blog_main" :offset="100" position="bottom">
+          <el-button id="like" @click="like">
+            <Icon name="likes"></Icon>
+          </el-button>
+        </el-affix>
       </div>
     </div>
     <div id="comment_area">
@@ -102,5 +112,16 @@ h1 {
 
 .el-input {
   border-radius: 30px;
+}
+
+#like {
+  background-color: #C9C3EF;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
 }
 </style>
