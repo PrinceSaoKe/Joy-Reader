@@ -70,6 +70,7 @@ const submitAvatar = async () => {
   border-radius: 30px;
   justify-content: space-evenly;
   align-items: center;
+  margin: auto 0;
 }
 
 .center {
