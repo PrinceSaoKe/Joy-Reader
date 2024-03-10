@@ -7,8 +7,14 @@
       <el-menu mode="horizontal" default-active="/home/hot" background-color="#626DB7" :ellipsis="false" :router="true"
         active-text-color="#E3E7FF" text-color="#A3AAD6">
         <div style="width: 30px;"></div>
-        <el-menu-item index="/home/hot">热榜</el-menu-item>
-        <el-menu-item index="/home/new">最新</el-menu-item>
+        <el-menu-item index="/home/hot">
+          <Icon name="hot" color="#fff" style="margin-right: 10px;"></Icon>
+          热榜
+        </el-menu-item>
+        <el-menu-item index="/home/new">
+          <Icon name="time" style="margin-right: 10px;"></Icon>
+          最新
+        </el-menu-item>
       </el-menu>
     </el-header>
     <el-main>

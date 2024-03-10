@@ -9,9 +9,17 @@ defineProps<{ dataList: BlogModel[] }>()
   <el-card v-for="data in dataList" body-style="padding: 15px" @click="router.push(`/article/${data.blogId}`)">
     <h1>{{ data.title }}</h1>
     <p>{{ data.desc }}</p>
-    <span>热度 {{ data.clicks }}</span>
-    <span>{{ data.createTime }}</span>
-    <span>{{ data.authorName }}</span>
+    <span style="display: flex; align-items: center;">
+      <Icon name="hot_black" size="20px" style="margin-right: 5px;"></Icon>
+      热度
+      {{ data.clicks }}
+      <Icon name="time_black" size="20px" style="margin: 0 5px 0 20px;"></Icon>
+      {{ data.createTime }}
+      <span style="margin-left: auto; width: 100px; align-items: center; display: flex;">
+        <Icon name="user" size="20px" style="margin-right: 5px;"></Icon>
+        {{ data.authorName }}
+      </span>
+    </span>
   </el-card>
 </template>
 

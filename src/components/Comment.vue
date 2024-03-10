@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { commentBlog } from '@/api/api';
+import { commentBlog, likeComment } from '@/api/api';
 import Avatar from '@/components/Avatar.vue';
 import { CommentModel } from "@/models/comment";
 import { ref } from "vue";
@@ -22,8 +22,9 @@ const reload = () => {
     </div>
     <div style="width: 20px;"></div>
     <div class="content">{{ data.content }}</div>
-    <div style="width: 20px;"></div>
-    <el-button @click="dialogVisible = true">评论</el-button>
+    <Icon name="like" style="padding: 0 5px;" @click="likeComment(data.commentId).then(() => data.likes++)"></Icon>
+    {{ data.likes }}
+    <Icon name="comment" style="padding: 0 10px;" @click="dialogVisible = true"></Icon>
   </div>
   <div style="display: flex;">
     <div style="width: 100px;"></div>

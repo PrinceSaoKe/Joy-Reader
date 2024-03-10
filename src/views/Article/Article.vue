@@ -50,13 +50,13 @@ const like = async () => {
         <div v-html="blogRef?.content"></div>
         <el-affix target="#blog_main" :offset="100" position="bottom">
           <el-button id="like" @click="like">
-            <Icon name="likes"></Icon>
+            <Icon name="like"></Icon>
           </el-button>
         </el-affix>
       </div>
     </div>
     <div id="comment_area">
-      <div style="display: flex; justify-content: space-between;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2>评论区</h2>
         <el-button @click="uploadComment">发布</el-button>
       </div>

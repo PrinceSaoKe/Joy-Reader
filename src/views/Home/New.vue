@@ -29,7 +29,7 @@ onMounted(() => {
   <div>
     <HomeList :dataList="dataListRef"></HomeList>
     <div class="bottom_center">
-      <el-pagination layout="prev, pager, next, jumper" :total="totalPageRef" @current-change="onPageChange"
+      <el-pagination layout="prev, pager, next, jumper" :total="totalPageRef * 10" @current-change="onPageChange"
         background />
     </div>
   </div>

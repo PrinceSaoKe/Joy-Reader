@@ -4,7 +4,7 @@ export class CommentModel {
   readonly userName: string
   readonly content: string
   readonly createTime: Date
-  readonly likes: number
+  likes: number
   readonly level: number
   readonly avatarUrl: string
   readonly subComments: CommentModel[]
