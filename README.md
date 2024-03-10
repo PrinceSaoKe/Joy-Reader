@@ -18,8 +18,12 @@
 
 ## 预览
 
-!(主页)[./preview/home.png]
-!(登录)[./preview/auth.png]
-!(编辑)[./preview/edit.png]
-!(个人中心)[./preview/my.png]
-!(设置)[./preview/settings.png]
+![主页](./preview/home.png)
+
+![登录](./preview/auth.png)
+
+![编辑](./preview/edit.png)
+
+![个人中心](./preview/my.png)
+
+![设置](./preview/settings.png)
