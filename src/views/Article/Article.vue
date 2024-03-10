@@ -39,12 +39,16 @@ const like = async () => {
     <div id="blog_area">
       <div id="blog_header">
         <h1>{{ blogRef?.title }}</h1>
-        <span>{{ blogRef?.clicks }}</span>
-        <span>{{ blogRef?.createTime }}</span>
-        <span>
+        <div>
+          <Icon name="hot_black" size="20px" style="margin-right: 5px;"></Icon>
+          热度
+          {{ blogRef?.clicks }}
+          <Icon name="time_black" size="20px" style="margin: 0 5px 0 15px;"></Icon>
+          {{ blogRef?.createTime }}
+          <Avatar id="author_avatar" size="30px" :avatar-url="blogRef?.authorAvatarUrl" style="margin: 0 10px 0 auto;">
+          </Avatar>
           {{ blogRef?.authorName }}
-          <Avatar id="author_avatar" size="30px" :avatar-url="blogRef?.authorAvatarUrl"></Avatar>
-        </span>
+        </div>
       </div>
       <div id="blog_main">
         <div v-html="blogRef?.content"></div>
@@ -79,18 +83,9 @@ const like = async () => {
   padding: 20px 35px 25px 35px;
 }
 
-#blog_header span {
-  display: inline-block;
-}
-
-#blog_header span:last-child {
-  float: right;
+#blog_header div {
   display: flex;
   align-items: center;
-}
-
-#author_avatar {
-  margin-left: 10px;
 }
 
 #blog_main {

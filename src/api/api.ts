@@ -16,6 +16,16 @@ const api = axios.create({
   timeout: 20000,  // 设置超时时间
 })
 
+api.interceptors.response.use(res => res, (error) => {
+  console.log(error.response.status)
+  if (error.response.status === 401) {
+    window.location.href = '#/auth/login'
+    return Promise.reject(new Error('Token无效'))
+  } else {
+    return error
+  }
+})
+
 /// 设置Token
 export const setToken = () => {
   const token = localStorage.getItem('token')
